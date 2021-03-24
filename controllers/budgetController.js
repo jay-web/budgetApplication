@@ -129,29 +129,63 @@ var budgetController = (function () {
       return allPercentages;
     },
     getBudget: function () {
-      console.log(data);
-        let savedBudget = JSON.parse(localStorage.getItem("budget"));
-        console.log(savedBudget);
-        if(savedBudget !== null && savedBudget.budget !== 0){
-          data = savedBudget;
-        }
-        // if(savedBudget !== null){
-        //     return {
-        //         budget: savedBudget.budget,
-        //         totalInc: savedBudget.totals.inc,
-        //         totalExp: savedBudget.totals.exp,
-        //         percentage: savedBudget.percentage,
-        //       };
-        // }else{
-            return {
-                budget: data.budget,
-                totalInc: data.totals.inc,
-                totalExp: data.totals.exp,
-                percentage: data.percentage,
-              };
+        
+        
+       
+        
+        
+        return {
+          budget: data.budget,
+          totalInc: data.totals.inc,
+          totalExp: data.totals.exp,
+          percentage: data.percentage,
+        };
+       
+    
+           
         // }
      
     },
+
+    getBudgetFromLocal: function () {
+        
+      let savedBudget = JSON.parse(localStorage.getItem("budget"));
+      // console.log(savedBudget.allItems.inc);
+      if(savedBudget !== null && savedBudget.budget !== 0){
+        if(savedBudget.allItems.inc.length > 0){
+          savedBudget.allItems.inc.map((item) => {
+            // console.log(item)
+            let newitem = new Income(item.id, item.description, item.value);
+            data.allItems["inc"].push(newitem)
+          })
+        }
+        if(savedBudget.allItems.exp.length > 0){
+          savedBudget.allItems.exp.map((item) => {
+            // console.log(item)
+            let newitem = new Expenses(item.id, item.description, item.value);
+            data.allItems["exp"].push(newitem)
+          })
+        }
+        data.budget = savedBudget.budget;
+        data.percentage = savedBudget.percentage;
+        data.totals = savedBudget.totals;
+        
+      }
+   
+    
+    
+    return {
+      budget: data.budget,
+      totalInc: data.totals.inc,
+      totalExp: data.totals.exp,
+      percentage: data.percentage,
+    };
+   
+
+       
+    // }
+ 
+},
     // for testing purpose only in console.
     testing: function () {
       console.log(data);

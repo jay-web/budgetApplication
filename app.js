@@ -137,7 +137,7 @@ var controller = (function (budgetCtrl, UICtrl) {
   return {
     init: function () {
       console.log("application has been started");
-      var budget = budgetCtrl.getBudget();
+      var budget = budgetCtrl.getBudgetFromLocal();
       UICtrl.displayMonth();
       UICtrl.displayBudget(budget);
       getAddItems();
